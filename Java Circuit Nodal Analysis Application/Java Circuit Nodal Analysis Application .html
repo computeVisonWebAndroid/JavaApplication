@@ -1,0 +1,662 @@
+<html>
+<head>
+<title>Java Circuit Nodal Analysis Application .java</title>
+</head>
+<body>
+<h2><a name="Java Circuit Nodal Analysis Application .java"><code>Java Circuit Nodal Analysis Application .java</code></h2>
+<P>Download the jar file: <a href="Java Circuit Nodal Analysis Application .jar">Java Circuit Nodal Analysis Application</a>
+<p>Download the Q1 file: <a href="Q1.rar">Java Circuit Nodal Analysis Application .rar</a>
+
+<p><hr>
+<!-- Generator: GNU source-highlight 2.1.2
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+<b><font color="#000080">import</font></b> java<font color="#990000">.</font>util<font color="#990000">.</font><font color="#990000">*</font><font color="#990000">;</font>
+<b><font color="#000080">import</font></b> java<font color="#990000">.</font>io<font color="#990000">.</font>FileReader<font color="#990000">;</font>
+<b><font color="#000080">import</font></b> java<font color="#990000">.</font>io<font color="#990000">.</font>BufferedReader<font color="#990000">;</font>
+<b><font color="#000080">import</font></b> java<font color="#990000">.</font>lang<font color="#990000">.</font>NumberFormatException<font color="#990000">;</font>
+<b><font color="#000080">import</font></b> java<font color="#990000">.</font>io<font color="#990000">.</font>IOException<font color="#990000">;</font>
+<b><font color="#000080">import</font></b> java<font color="#990000">.</font>awt<font color="#990000">.</font><font color="#990000">*</font><font color="#990000">;</font>
+<b><font color="#000080">import</font></b> javax<font color="#990000">.</font>swing<font color="#990000">.</font><font color="#990000">*</font><font color="#990000">;</font>
+
+<b><font color="#000080">import</font></b> java<font color="#990000">.</font>awt<font color="#990000">.</font>event<font color="#990000">.</font><font color="#990000">*</font><font color="#990000">;</font>
+<b><font color="#000080">import</font></b> java<font color="#990000">.</font>io<font color="#990000">.</font><font color="#990000">*</font><font color="#990000">;</font>
+<b><font color="#000080">import</font></b> javax<font color="#990000">.</font>imageio<font color="#990000">.</font><font color="#990000">*</font><font color="#990000">;</font>
+<b><font color="#000080">import</font></b> javax<font color="#990000">.</font>swing<font color="#990000">.</font>filechooser<font color="#990000">.</font><font color="#990000">*</font><font color="#990000">;</font>
+<b><font color="#000080">import</font></b> java<font color="#990000">.</font>lang<font color="#990000">.</font>Math<font color="#990000">;</font>
+<b><font color="#000080">import</font></b> java<font color="#990000">.</font>io<font color="#990000">.</font><font color="#990000">*</font><font color="#990000">;</font>
+
+
+<b><font color="#0000FF">public</font></b> <b><font color="#0000FF">class</font></b> Java Circuit Nodal Analysis Application 
+<font color="#FF0000">{</font>
+	<b><font color="#0000FF">public</font></b> <b><font color="#0000FF">static</font></b> <font color="#009900">void</font> <b><font color="#000000">main</font></b><font color="#990000">(</font>String<font color="#990000">[</font><font color="#990000">]</font> args<font color="#990000">)</font> 
+	<font color="#FF0000">{</font>
+		mainFrame mf <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">mainFrame</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+<font color="#FF0000">}</font>
+
+
+
+<b><font color="#0000FF">class</font></b> mainFrame 
+<font color="#FF0000">{</font>
+	<i><font color="#9A1900">//</font></i><i><font color="#9A1900">GUI part</font></i>
+	<b><font color="#0000FF">private</font></b> JFrame win<font color="#990000">;</font>
+	<b><font color="#0000FF">private</font></b> JMenuBar mbar<font color="#990000">;</font>
+	<b><font color="#0000FF">private</font></b> TextArea ta<font color="#990000">;</font>
+	<b><font color="#0000FF">private</font></b> JMenu fileMenu<font color="#990000">,</font>EditMenu<font color="#990000">,</font>HelpMenu<font color="#990000">,</font>subAddMenu<font color="#990000">,</font>Caculation<font color="#990000">;</font>
+	<b><font color="#0000FF">private</font></b> JMenuItem addReItem<font color="#990000">,</font>addCuItem<font color="#990000">,</font>addVoItem<font color="#990000">,</font>addWiItem<font color="#990000">,</font>
+					  EdReItem<font color="#990000">,</font>EdCuItem<font color="#990000">,</font>EdVoItem<font color="#990000">,</font>
+					  openItem<font color="#990000">,</font>saveItem<font color="#990000">,</font>removeAllItem<font color="#990000">,</font>caculationItem<font color="#990000">;</font>
+	<b><font color="#0000FF">public</font></b> Dialog d<font color="#990000">;</font>
+	<i><font color="#9A1900">//</font></i><i><font color="#9A1900"> File Part</font></i>
+	<b><font color="#0000FF">public</font></b>  String filename<font color="#990000">;</font>
+	<b><font color="#0000FF">public</font></b> 	paintAll paintPanel<font color="#990000">;</font>
+	 
+	<b><font color="#0000FF">private</font></b> File file<font color="#990000">;</font>
+
+	<i><font color="#9A1900">//</font></i><i><font color="#9A1900"> register Par</font></i>
+	<b><font color="#0000FF">public</font></b> ArrayList<font color="#990000">&lt;</font>Resistor<font color="#990000">&gt;</font> Rlist <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> ArrayList<font color="#990000">&lt;</font>Resistor<font color="#990000">&gt;</font><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+	<b><font color="#0000FF">public</font></b> ArrayList<font color="#990000">&lt;</font>Voltage<font color="#990000">&gt;</font>  Vlist <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> ArrayList<font color="#990000">&lt;</font>Voltage<font color="#990000">&gt;</font><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+	<b><font color="#0000FF">public</font></b> ArrayList<font color="#990000">&lt;</font>Icurrent<font color="#990000">&gt;</font> Ilist <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> ArrayList<font color="#990000">&lt;</font>Icurrent<font color="#990000">&gt;</font><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+	<b><font color="#0000FF">public</font></b> ArrayList<font color="#990000">&lt;</font>Point<font color="#990000">&gt;</font> Plist <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> ArrayList<font color="#990000">&lt;</font>Point<font color="#990000">&gt;</font><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+	<b><font color="#0000FF">public</font></b> ArrayList<font color="#990000">&lt;</font>Line1<font color="#990000">&gt;</font> Llist <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> ArrayList<font color="#990000">&lt;</font>Line1<font color="#990000">&gt;</font><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+	<b><font color="#0000FF">public</font></b> Resistor Rcurrent<font color="#990000">;</font>
+	<b><font color="#0000FF">public</font></b> Voltage  Vcurrent<font color="#990000">;</font>
+	<b><font color="#0000FF">public</font></b> Icurrent Icurrent<font color="#990000">;</font>
+	
+	<b><font color="#0000FF">public</font></b> Line1 Lcurrent<font color="#990000">,</font>Lcurrent1<font color="#990000">;</font>
+	<b><font color="#0000FF">public</font></b> Line1 Ltemp <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">Line1</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+	<b><font color="#0000FF">private</font></b> <font color="#009900">boolean</font> pj <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+	<b><font color="#0000FF">private</font></b> Point<font color="#990000">[</font><font color="#990000">]</font> pl <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> Point<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font><font color="#990000">;</font>
+
+
+
+	<b><font color="#0000FF">public</font></b> <font color="#009900">int</font> x <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+	<b><font color="#0000FF">public</font></b> <font color="#009900">int</font> y <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+
+	<font color="#009900">boolean</font> addRe<font color="#990000">;</font> 
+	<font color="#009900">boolean</font> addCu<font color="#990000">;</font> 
+	<font color="#009900">boolean</font> addVo<font color="#990000">;</font> 
+	<font color="#009900">boolean</font> addWi<font color="#990000">;</font> 
+	
+	<font color="#009900">boolean</font> EdRe<font color="#990000">;</font> 
+	<font color="#009900">boolean</font> EdCu<font color="#990000">;</font> 
+	<font color="#009900">boolean</font> EdVo<font color="#990000">;</font>
+	 
+
+	
+
+    <b><font color="#000000">mainFrame</font></b><font color="#990000">(</font><font color="#990000">)</font> 
+	<font color="#FF0000">{</font>
+		<b><font color="#000000">initState</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+		<b><font color="#000000">init</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+
+	<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">init</font></b><font color="#990000">(</font><font color="#990000">)</font>
+	<font color="#FF0000">{</font>
+		win <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JFrame</font></b><font color="#990000">(</font><font color="#FF0000">"Circuit Draw"</font><font color="#990000">)</font><font color="#990000">;</font>
+		win<font color="#990000">.</font><b><font color="#000000">setBounds</font></b><font color="#990000">(</font><font color="#993399">300</font><font color="#990000">,</font><font color="#993399">100</font><font color="#990000">,</font><font color="#993399">600</font><font color="#990000">,</font><font color="#993399">600</font><font color="#990000">)</font><font color="#990000">;</font>
+
+		paintPanel <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">paintAll</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+
+		mbar <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenuBar</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+		fileMenu <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenu</font></b><font color="#990000">(</font><font color="#FF0000">"File (F)"</font><font color="#990000">)</font><font color="#990000">;</font>
+		EditMenu <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenu</font></b><font color="#990000">(</font><font color="#FF0000">"Edit (E)"</font><font color="#990000">)</font><font color="#990000">;</font>
+		HelpMenu <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenu</font></b><font color="#990000">(</font><font color="#FF0000">"Help (W)"</font><font color="#990000">)</font><font color="#990000">;</font>
+			
+		subAddMenu <font color="#990000">=</font>  <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenu</font></b><font color="#990000">(</font><font color="#FF0000">"Add (A)"</font><font color="#990000">)</font><font color="#990000">;</font>
+		Caculation <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenu</font></b><font color="#990000">(</font><font color="#FF0000">"CaculationPanel (CP)"</font><font color="#990000">)</font><font color="#990000">;</font>
+				
+				addReItem <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenuItem</font></b><font color="#990000">(</font><font color="#FF0000">"Resistor"</font><font color="#990000">)</font><font color="#990000">;</font>
+				addCuItem <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenuItem</font></b><font color="#990000">(</font><font color="#FF0000">"Cuttent"</font><font color="#990000">)</font><font color="#990000">;</font>
+				addVoItem <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenuItem</font></b><font color="#990000">(</font><font color="#FF0000">"Voltage"</font><font color="#990000">)</font><font color="#990000">;</font>
+				addWiItem <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenuItem</font></b><font color="#990000">(</font><font color="#FF0000">"Wires"</font><font color="#990000">)</font><font color="#990000">;</font>
+				
+				openItem <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenuItem</font></b><font color="#990000">(</font><font color="#FF0000">"Open (O)"</font><font color="#990000">)</font><font color="#990000">;</font>
+				saveItem <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenuItem</font></b><font color="#990000">(</font><font color="#FF0000">"Save As (S)"</font><font color="#990000">)</font><font color="#990000">;</font>
+				removeAllItem <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenuItem</font></b><font color="#990000">(</font><font color="#FF0000">"RemoveAll"</font><font color="#990000">)</font><font color="#990000">;</font>
+
+				EdReItem <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenuItem</font></b><font color="#990000">(</font><font color="#FF0000">"Resistor"</font><font color="#990000">)</font><font color="#990000">;</font>
+				EdCuItem <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenuItem</font></b><font color="#990000">(</font><font color="#FF0000">"Cuttent"</font><font color="#990000">)</font><font color="#990000">;</font>
+				EdVoItem <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenuItem</font></b><font color="#990000">(</font><font color="#FF0000">"Voltage"</font><font color="#990000">)</font><font color="#990000">;</font>
+
+				caculationItem <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">JMenuItem</font></b><font color="#990000">(</font><font color="#FF0000">"Result"</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+		mbar<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>fileMenu<font color="#990000">)</font><font color="#990000">;</font>
+		mbar<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>subAddMenu<font color="#990000">)</font><font color="#990000">;</font>
+		mbar<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>EditMenu<font color="#990000">)</font><font color="#990000">;</font>
+		mbar<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>Caculation<font color="#990000">)</font><font color="#990000">;</font>
+		mbar<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>HelpMenu<font color="#990000">)</font><font color="#990000">;</font>
+
+			fileMenu<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>openItem<font color="#990000">)</font><font color="#990000">;</font>
+			fileMenu<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>saveItem<font color="#990000">)</font><font color="#990000">;</font>
+			fileMenu<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>removeAllItem<font color="#990000">)</font><font color="#990000">;</font>
+				
+				subAddMenu<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>addReItem<font color="#990000">)</font><font color="#990000">;</font>
+				subAddMenu<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>addCuItem<font color="#990000">)</font><font color="#990000">;</font>
+				subAddMenu<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>addVoItem<font color="#990000">)</font><font color="#990000">;</font>
+				subAddMenu<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>addWiItem<font color="#990000">)</font><font color="#990000">;</font>
+
+
+			EditMenu<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>EdReItem<font color="#990000">)</font><font color="#990000">;</font>
+			EditMenu<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>EdCuItem<font color="#990000">)</font><font color="#990000">;</font>
+			EditMenu<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>EdVoItem<font color="#990000">)</font><font color="#990000">;</font>
+
+			Caculation<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>caculationItem<font color="#990000">)</font><font color="#990000">;</font>
+
+			
+		win<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>mbar<font color="#990000">,</font>BorderLayout<font color="#990000">.</font>NORTH<font color="#990000">)</font><font color="#990000">;</font>
+		win<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>paintPanel<font color="#990000">)</font><font color="#990000">;</font>
+
+		
+		win<font color="#990000">.</font><b><font color="#000000">setDefaultCloseOperation</font></b><font color="#990000">(</font>JFrame<font color="#990000">.</font>EXIT_ON_CLOSE<font color="#990000">)</font><font color="#990000">;</font>
+		<b><font color="#000000">myEvent</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+		win<font color="#990000">.</font><b><font color="#000000">setVisible</font></b><font color="#990000">(</font><b><font color="#0000FF">true</font></b><font color="#990000">)</font><font color="#990000">;</font>
+		
+
+		<b><font color="#0000FF">if</font></b><font color="#990000">(</font>filename <font color="#990000">!</font><font color="#990000">=</font> <b><font color="#0000FF">null</font></b><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+		<font color="#FF0000">}</font>
+
+	<font color="#FF0000">}</font>
+
+	<b><font color="#0000FF">private</font></b> <font color="#009900">void</font> <b><font color="#000000">initState</font></b><font color="#990000">(</font><font color="#990000">)</font>
+	<font color="#FF0000">{</font>		
+		 addRe <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> 
+		 addCu <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> 
+		 addVo <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> 
+		 addWi <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> 
+		
+		 EdRe <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> 
+		 EdCu <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font> 
+		 EdVo <font color="#990000">=</font> <b><font color="#0000FF">false</font></b><font color="#990000">;</font>
+
+	<font color="#FF0000">}</font>
+
+   <i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">	for test print</font></i>
+<i><font color="#9A1900">   </font></i><i><font color="#9A1900">*/</font></i> 
+	<b><font color="#0000FF">private</font></b> <font color="#009900">void</font> <b><font color="#000000">print</font></b><font color="#990000">(</font>String ss<font color="#990000">)</font>
+	<font color="#FF0000">{</font>
+		System<font color="#990000">.</font>out<font color="#990000">.</font><b><font color="#000000">println</font></b><font color="#990000">(</font>ss<font color="#990000">)</font><font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+
+	<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">	for iner search funciton</font></i>
+<i><font color="#9A1900">	</font></i><i><font color="#9A1900">*/</font></i>
+
+	<b><font color="#0000FF">public</font></b> Resistor <b><font color="#000000">findR</font></b><font color="#990000">(</font>Point p<font color="#990000">)</font>
+	<font color="#FF0000">{</font>
+		<font color="#009900">double</font> x <font color="#990000">=</font> p<font color="#990000">.</font><b><font color="#000000">getX</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+		<font color="#009900">double</font> y <font color="#990000">=</font> p<font color="#990000">.</font><b><font color="#000000">getY</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+		<b><font color="#0000FF">for</font></b><font color="#990000">(</font>Resistor r <font color="#990000">:</font> Rlist<font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+			<b><font color="#0000FF">if</font></b><font color="#990000">(</font>x <font color="#990000">&gt;</font><font color="#990000">=</font> <font color="#990000">(</font>r<font color="#990000">.</font>xloc<font color="#990000">-</font><font color="#993399">30</font><font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> x<font color="#990000">&lt;</font><font color="#990000">=</font><font color="#990000">(</font>r<font color="#990000">.</font>xloc<font color="#990000">+</font><font color="#993399">30</font><font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> y <font color="#990000">&gt;</font><font color="#990000">=</font> <font color="#990000">(</font>r<font color="#990000">.</font>yloc<font color="#990000">-</font><font color="#993399">7</font><font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> y <font color="#990000">&lt;</font><font color="#990000">=</font> <font color="#990000">(</font>r<font color="#990000">.</font>yloc <font color="#990000">+</font> <font color="#993399">7</font><font color="#990000">)</font><font color="#990000">)</font> 
+			<font color="#FF0000">{</font>
+				<b><font color="#0000FF">return</font></b> r<font color="#990000">;</font>
+			<font color="#FF0000">}</font>
+		<font color="#FF0000">}</font>
+		<b><font color="#0000FF">return</font></b> <b><font color="#0000FF">null</font></b><font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+
+	<b><font color="#0000FF">public</font></b> Voltage <b><font color="#000000">findV</font></b><font color="#990000">(</font>Point p<font color="#990000">)</font>
+	<font color="#FF0000">{</font>
+		<font color="#009900">double</font> x <font color="#990000">=</font> p<font color="#990000">.</font><b><font color="#000000">getX</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+		<font color="#009900">double</font> y <font color="#990000">=</font> p<font color="#990000">.</font><b><font color="#000000">getY</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+		<b><font color="#0000FF">for</font></b><font color="#990000">(</font>Voltage v<font color="#990000">:</font> Vlist<font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+			<b><font color="#0000FF">if</font></b><font color="#990000">(</font>x <font color="#990000">&gt;</font><font color="#990000">=</font> <font color="#990000">(</font>v<font color="#990000">.</font>xloc<font color="#990000">-</font><font color="#993399">15</font><font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> x <font color="#990000">&lt;</font><font color="#990000">=</font><font color="#990000">(</font>v<font color="#990000">.</font>xloc<font color="#990000">+</font><font color="#993399">15</font><font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> y <font color="#990000">&gt;</font><font color="#990000">=</font> <font color="#990000">(</font>v<font color="#990000">.</font>yloc <font color="#990000">-</font><font color="#993399">15</font><font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> y <font color="#990000">&lt;</font><font color="#990000">=</font> <font color="#990000">(</font>v<font color="#990000">.</font>yloc<font color="#990000">+</font><font color="#993399">15</font><font color="#990000">)</font><font color="#990000">)</font> 
+			<font color="#FF0000">{</font>
+				<b><font color="#0000FF">return</font></b> v<font color="#990000">;</font>
+			<font color="#FF0000">}</font>
+		<font color="#FF0000">}</font>
+		<b><font color="#0000FF">return</font></b> <b><font color="#0000FF">null</font></b><font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+
+	<b><font color="#0000FF">public</font></b> Icurrent <b><font color="#000000">findI</font></b><font color="#990000">(</font>Point p<font color="#990000">)</font>
+	<font color="#FF0000">{</font>
+		<font color="#009900">double</font> x <font color="#990000">=</font> p<font color="#990000">.</font><b><font color="#000000">getX</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+		<font color="#009900">double</font> y <font color="#990000">=</font> p<font color="#990000">.</font><b><font color="#000000">getY</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+		<b><font color="#0000FF">for</font></b><font color="#990000">(</font>Icurrent ic <font color="#990000">:</font> Ilist<font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+			<b><font color="#0000FF">if</font></b><font color="#990000">(</font>x <font color="#990000">&gt;</font><font color="#990000">=</font> <font color="#990000">(</font>ic<font color="#990000">.</font>xloc<font color="#990000">-</font><font color="#993399">15</font><font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> x <font color="#990000">&lt;</font><font color="#990000">=</font><font color="#990000">(</font>ic<font color="#990000">.</font>xloc<font color="#990000">+</font><font color="#993399">15</font><font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> y <font color="#990000">&gt;</font><font color="#990000">=</font> <font color="#990000">(</font>ic<font color="#990000">.</font>yloc <font color="#990000">-</font><font color="#993399">15</font><font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> y <font color="#990000">&lt;</font><font color="#990000">=</font> <font color="#990000">(</font>ic<font color="#990000">.</font>yloc<font color="#990000">+</font><font color="#993399">15</font><font color="#990000">)</font><font color="#990000">)</font> 
+			<font color="#FF0000">{</font>
+				<b><font color="#0000FF">return</font></b> ic<font color="#990000">;</font>
+			<font color="#FF0000">}</font>
+		<font color="#FF0000">}</font>
+		<b><font color="#0000FF">return</font></b> <b><font color="#0000FF">null</font></b><font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+
+	<b><font color="#0000FF">public</font></b> Line1 <b><font color="#000000">findL</font></b><font color="#990000">(</font>Point p<font color="#990000">)</font>
+	<font color="#FF0000">{</font>
+		<font color="#009900">double</font> x <font color="#990000">=</font> p<font color="#990000">.</font><b><font color="#000000">getX</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+		<font color="#009900">double</font> y <font color="#990000">=</font> p<font color="#990000">.</font><b><font color="#000000">getY</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+		<b><font color="#0000FF">for</font></b> <font color="#990000">(</font>Line1 l1 <font color="#990000">:</font> Llist<font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+			<b><font color="#0000FF">if</font></b> <font color="#990000">(</font><font color="#990000">(</font>x<font color="#990000">&gt;</font><font color="#990000">=</font> <font color="#990000">(</font>l1<font color="#990000">.</font>begin<font color="#990000">.</font>x <font color="#990000">-</font><font color="#993399">2</font><font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> x <font color="#990000">&lt;</font><font color="#990000">=</font><font color="#990000">(</font>l1<font color="#990000">.</font>begin<font color="#990000">.</font>x<font color="#990000">+</font><font color="#993399">2</font><font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> y <font color="#990000">&gt;</font><font color="#990000">=</font> <font color="#990000">(</font>l1<font color="#990000">.</font>end<font color="#990000">.</font>y<font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> y <font color="#990000">&lt;</font><font color="#990000">=</font> l1<font color="#990000">.</font>begin<font color="#990000">.</font>y<font color="#990000">)</font> <font color="#990000">|</font><font color="#990000">|</font> <font color="#990000">(</font> x <font color="#990000">&gt;</font><font color="#990000">=</font> l1<font color="#990000">.</font>begin<font color="#990000">.</font>x <font color="#990000">&amp;</font><font color="#990000">&amp;</font> x <font color="#990000">&lt;</font><font color="#990000">=</font> l1<font color="#990000">.</font>end<font color="#990000">.</font>x <font color="#990000">&amp;</font><font color="#990000">&amp;</font> y <font color="#990000">&gt;</font><font color="#990000">=</font> <font color="#990000">(</font>l1<font color="#990000">.</font>end<font color="#990000">.</font>y<font color="#990000">-</font><font color="#993399">2</font><font color="#990000">)</font> <font color="#990000">&amp;</font><font color="#990000">&amp;</font> y <font color="#990000">&lt;</font><font color="#990000">=</font> <font color="#990000">(</font>l1<font color="#990000">.</font>end<font color="#990000">.</font>y<font color="#990000">+</font><font color="#993399">2</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				<b><font color="#0000FF">return</font></b> l1<font color="#990000">;</font>
+			<font color="#FF0000">}</font>
+		<font color="#FF0000">}</font>
+	
+		<b><font color="#0000FF">return</font></b> <b><font color="#0000FF">null</font></b><font color="#990000">;</font>
+	
+	<font color="#FF0000">}</font>
+
+
+	<b><font color="#0000FF">private</font></b> <font color="#009900">void</font> <b><font color="#000000">clear</font></b><font color="#990000">(</font><font color="#990000">)</font>
+	<font color="#FF0000">{</font>
+				Rlist<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+				Vlist<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+				Ilist<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+				Llist<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+
+
+	<b><font color="#0000FF">private</font></b> <font color="#009900">void</font> <b><font color="#000000">myEvent</font></b><font color="#990000">(</font><font color="#990000">)</font>
+	<font color="#FF0000">{</font>
+
+		<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">		add the button listner;</font></i>
+<i><font color="#9A1900">		</font></i><i><font color="#9A1900">*/</font></i>
+		openItem<font color="#990000">.</font><b><font color="#000000">addActionListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">ActionListener</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">actionPerformed</font></b><font color="#990000">(</font>ActionEvent e<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				
+				<b><font color="#000000">print</font></b><font color="#990000">(</font><font color="#FF0000">"openItem"</font><font color="#990000">)</font><font color="#990000">;</font>
+				FileChooser application <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">FileChooser</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+				ReadFile RF <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">ReadFile</font></b><font color="#990000">(</font>application<font color="#990000">.</font>filename<font color="#990000">)</font><font color="#990000">;</font>
+				application<font color="#990000">.</font><b><font color="#000000">setDefaultCloseOperation</font></b><font color="#990000">(</font> JFrame<font color="#990000">.</font>EXIT_ON_CLOSE <font color="#990000">)</font><font color="#990000">;</font>
+				<b><font color="#000000">clear</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+
+				Rlist <font color="#990000">=</font> RF<font color="#990000">.</font>R<font color="#990000">;</font>
+				Vlist <font color="#990000">=</font> RF<font color="#990000">.</font>V<font color="#990000">;</font>
+				Ilist <font color="#990000">=</font> RF<font color="#990000">.</font>C<font color="#990000">;</font>
+				Llist <font color="#990000">=</font> RF<font color="#990000">.</font>L<font color="#990000">;</font>
+				
+				paintPanel<font color="#990000">.</font><b><font color="#000000">setPaintList</font></b><font color="#990000">(</font>Rlist<font color="#990000">,</font>Vlist<font color="#990000">,</font>Ilist<font color="#990000">,</font>Llist<font color="#990000">)</font><font color="#990000">;</font>
+				paintPanel<font color="#990000">.</font><b><font color="#000000">repaint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+			<font color="#FF0000">}</font>
+
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+		addReItem<font color="#990000">.</font><b><font color="#000000">addActionListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">ActionListener</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">actionPerformed</font></b><font color="#990000">(</font>ActionEvent e<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				
+				<b><font color="#000000">print</font></b><font color="#990000">(</font><font color="#FF0000">"addReItem"</font><font color="#990000">)</font><font color="#990000">;</font>
+				addRe <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+
+				Rlist<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">Resistor</font></b><font color="#990000">(</font><font color="#FF0000">"R"</font><font color="#990000">,</font><font color="#993399">1</font><font color="#990000">,</font><font color="#993399">2</font><font color="#990000">,</font><font color="#993399">0</font><font color="#990000">,</font><font color="#993399">0</font><font color="#990000">,</font><font color="#993399">0</font><font color="#990000">,</font><font color="#993399">100</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+
+			
+			<font color="#FF0000">}</font>
+
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>
+		
+		
+		addCuItem<font color="#990000">.</font><b><font color="#000000">addActionListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">ActionListener</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">actionPerformed</font></b><font color="#990000">(</font>ActionEvent e<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				
+				<b><font color="#000000">print</font></b><font color="#990000">(</font><font color="#FF0000">"addCuItem"</font><font color="#990000">)</font><font color="#990000">;</font>
+
+				addCu <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+				Ilist<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">Icurrent</font></b><font color="#990000">(</font><font color="#FF0000">"I"</font><font color="#990000">,</font><font color="#993399">1</font><font color="#990000">,</font><font color="#993399">2</font><font color="#990000">,</font><font color="#993399">0</font><font color="#990000">,</font><font color="#993399">0</font><font color="#990000">,</font><font color="#993399">0</font><font color="#990000">,</font><font color="#993399">0.1</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+
+			
+			<font color="#FF0000">}</font>
+
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+		addVoItem<font color="#990000">.</font><b><font color="#000000">addActionListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">ActionListener</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">actionPerformed</font></b><font color="#990000">(</font>ActionEvent e<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				
+				<b><font color="#000000">print</font></b><font color="#990000">(</font><font color="#FF0000">"addVoItem"</font><font color="#990000">)</font><font color="#990000">;</font>
+				
+				
+				addVo <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+				Vlist<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">Voltage</font></b><font color="#990000">(</font><font color="#FF0000">"V"</font><font color="#990000">,</font><font color="#993399">1</font><font color="#990000">,</font><font color="#993399">2</font><font color="#990000">,</font><font color="#993399">0</font><font color="#990000">,</font><font color="#993399">0</font><font color="#990000">,</font><font color="#993399">0</font><font color="#990000">,</font><font color="#993399">1</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>		
+			<font color="#FF0000">}</font>
+
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+
+		addWiItem<font color="#990000">.</font><b><font color="#000000">addActionListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">ActionListener</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">actionPerformed</font></b><font color="#990000">(</font>ActionEvent e<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				
+				<b><font color="#000000">print</font></b><font color="#990000">(</font><font color="#FF0000">"addWiItem"</font><font color="#990000">)</font><font color="#990000">;</font>
+				addWi <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>				
+				paintPanel<font color="#990000">.</font><b><font color="#000000">setCursor</font></b><font color="#990000">(</font>Cursor<font color="#990000">.</font><b><font color="#000000">getPredefinedCursor</font></b><font color="#990000">(</font>Cursor<font color="#990000">.</font>CROSSHAIR_CURSOR<font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+			<font color="#FF0000">}</font>
+		
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>
+
+	
+		saveItem<font color="#990000">.</font><b><font color="#000000">addActionListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">ActionListener</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">actionPerformed</font></b><font color="#990000">(</font>ActionEvent e<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				<b><font color="#000000">print</font></b><font color="#990000">(</font><font color="#FF0000">"saveItem"</font><font color="#990000">)</font><font color="#990000">;</font>
+
+				FileWirte FW <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">FileWirte</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+				FW<font color="#990000">.</font><b><font color="#000000">setParameter</font></b><font color="#990000">(</font>Rlist<font color="#990000">,</font>Vlist<font color="#990000">,</font>Ilist<font color="#990000">,</font>Llist<font color="#990000">)</font><font color="#990000">;</font>
+				FW<font color="#990000">.</font><b><font color="#000000">WriteToFile</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+			<font color="#FF0000">}</font>	
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>
+
+		removeAllItem<font color="#990000">.</font><b><font color="#000000">addActionListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">ActionListener</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">actionPerformed</font></b><font color="#990000">(</font>ActionEvent e<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				
+				<b><font color="#000000">print</font></b><font color="#990000">(</font><font color="#FF0000">"removeAllItem"</font><font color="#990000">)</font><font color="#990000">;</font>
+				Rlist<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+				Vlist<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+				Ilist<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+				Llist<font color="#990000">.</font><b><font color="#000000">clear</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+				paintPanel<font color="#990000">.</font><b><font color="#000000">repaint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+
+			<font color="#FF0000">}</font>	
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>
+
+		EdReItem<font color="#990000">.</font><b><font color="#000000">addActionListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">ActionListener</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">actionPerformed</font></b><font color="#990000">(</font>ActionEvent e<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				
+				<b><font color="#000000">print</font></b><font color="#990000">(</font><font color="#FF0000">"EdReItem"</font><font color="#990000">)</font><font color="#990000">;</font>
+
+				EditR ER <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">EditR</font></b><font color="#990000">(</font>win<font color="#990000">,</font>Rcurrent<font color="#990000">)</font><font color="#990000">;</font>
+				paintPanel<font color="#990000">.</font><b><font color="#000000">repaint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font> 			
+			<font color="#FF0000">}</font>
+
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+		EdCuItem<font color="#990000">.</font><b><font color="#000000">addActionListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">ActionListener</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">actionPerformed</font></b><font color="#990000">(</font>ActionEvent e<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				
+				<b><font color="#000000">print</font></b><font color="#990000">(</font><font color="#FF0000">"EdCuItem"</font><font color="#990000">)</font><font color="#990000">;</font>
+				EditI EI <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">EditI</font></b><font color="#990000">(</font>win<font color="#990000">,</font>Icurrent<font color="#990000">)</font><font color="#990000">;</font>
+				paintPanel<font color="#990000">.</font><b><font color="#000000">repaint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+
+			
+			<font color="#FF0000">}</font>
+
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+
+		EdVoItem<font color="#990000">.</font><b><font color="#000000">addActionListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">ActionListener</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">actionPerformed</font></b><font color="#990000">(</font>ActionEvent e<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+			
+				<b><font color="#000000">print</font></b><font color="#990000">(</font><font color="#FF0000">"EdVoItem"</font><font color="#990000">)</font><font color="#990000">;</font>
+				EditV EV <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">EditV</font></b><font color="#990000">(</font>win<font color="#990000">,</font>Vcurrent<font color="#990000">)</font><font color="#990000">;</font>
+				paintPanel<font color="#990000">.</font><b><font color="#000000">repaint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font> 
+			<font color="#FF0000">}</font>
+		
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+		caculationItem<font color="#990000">.</font><b><font color="#000000">addActionListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">ActionListener</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">actionPerformed</font></b><font color="#990000">(</font>ActionEvent e<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+			
+				<b><font color="#000000">print</font></b><font color="#990000">(</font><font color="#FF0000">"caculationItem"</font><font color="#990000">)</font><font color="#990000">;</font>
+				<b><font color="#0000FF">if</font></b> <font color="#990000">(</font><font color="#990000">!</font>Rlist<font color="#990000">.</font><b><font color="#000000">isEmpty</font></b><font color="#990000">(</font><font color="#990000">)</font> <font color="#990000">|</font><font color="#990000">|</font> <font color="#990000">!</font>Vlist<font color="#990000">.</font><b><font color="#000000">isEmpty</font></b><font color="#990000">(</font><font color="#990000">)</font> <font color="#990000">|</font><font color="#990000">|</font> <font color="#990000">!</font>Ilist<font color="#990000">.</font><b><font color="#000000">isEmpty</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font>
+				<font color="#FF0000">{</font>
+					CaculationFrame mf <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">CaculationFrame</font></b><font color="#990000">(</font>Rlist<font color="#990000">,</font>Ilist<font color="#990000">,</font>Vlist<font color="#990000">)</font><font color="#990000">;</font>
+				<font color="#FF0000">}</font>
+
+			<font color="#FF0000">}</font>
+		
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>		
+	
+
+
+
+	<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">		add the mouse Listen</font></i>
+<i><font color="#9A1900">	</font></i><i><font color="#9A1900">*/</font></i>
+		
+		paintPanel<font color="#990000">.</font><b><font color="#000000">addMouseListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">MouseAdapter</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">mousePressed</font></b><font color="#990000">(</font>MouseEvent event<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				<font color="#009900">int</font> x <font color="#990000">=</font> event<font color="#990000">.</font><b><font color="#000000">getX</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+			    <font color="#009900">int</font> y <font color="#990000">=</font> event<font color="#990000">.</font><b><font color="#000000">getY</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">for add component</font></i>
+<i><font color="#9A1900">*/</font></i>
+
+				  Rcurrent <font color="#990000">=</font> <b><font color="#000000">findR</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getPoint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+				  Vcurrent <font color="#990000">=</font> <b><font color="#000000">findV</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getPoint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+				  Icurrent <font color="#990000">=</font> <b><font color="#000000">findI</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getPoint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+				<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>addRe<font color="#990000">)</font>
+				<font color="#FF0000">{</font>
+						
+						 paintPanel<font color="#990000">.</font><b><font color="#000000">setColor</font></b><font color="#990000">(</font>Color<font color="#990000">.</font>black<font color="#990000">)</font><font color="#990000">;</font>
+						 <b><font color="#000000">initState</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+
+
+				<font color="#FF0000">}</font>
+				<b><font color="#0000FF">if</font></b><font color="#990000">(</font>addCu<font color="#990000">)</font>
+				<font color="#FF0000">{</font>
+					 paintPanel<font color="#990000">.</font><b><font color="#000000">setColor</font></b><font color="#990000">(</font>Color<font color="#990000">.</font>black<font color="#990000">)</font><font color="#990000">;</font>
+					 <b><font color="#000000">initState</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+				
+				<font color="#FF0000">}</font>
+
+				<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>addVo<font color="#990000">)</font>
+				<font color="#FF0000">{</font>
+					 paintPanel<font color="#990000">.</font><b><font color="#000000">setColor</font></b><font color="#990000">(</font>Color<font color="#990000">.</font>black<font color="#990000">)</font><font color="#990000">;</font>
+					 <b><font color="#000000">initState</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+				<font color="#FF0000">}</font>
+
+				<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>addWi <font color="#990000">&amp;</font><font color="#990000">&amp;</font> event<font color="#990000">.</font><b><font color="#000000">getButton</font></b><font color="#990000">(</font><font color="#990000">)</font> <font color="#990000">=</font><font color="#990000">=</font> event<font color="#990000">.</font>BUTTON1<font color="#990000">)</font>
+				<font color="#FF0000">{</font>
+
+						Lcurrent <font color="#990000">=</font> 	<b><font color="#0000FF">new</font></b> <b><font color="#000000">Line1</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getPoint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">,</font>event<font color="#990000">.</font><b><font color="#000000">getPoint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>				<font color="#990000">;</font>
+
+						Llist<font color="#990000">.</font><b><font color="#000000">add</font></b><font color="#990000">(</font>Lcurrent<font color="#990000">)</font><font color="#990000">;</font>
+						paintPanel<font color="#990000">.</font><b><font color="#000000">setPaintList</font></b><font color="#990000">(</font>Rlist<font color="#990000">,</font>Vlist<font color="#990000">,</font>Ilist<font color="#990000">,</font>Llist<font color="#990000">)</font><font color="#990000">;</font>
+				<font color="#FF0000">}</font>
+
+<i><font color="#9A1900">/**</font></i>
+<i><font color="#9A1900">for delet component</font></i>
+<i><font color="#9A1900">*/</font></i>
+				<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getButton</font></b><font color="#990000">(</font><font color="#990000">)</font> <font color="#990000">=</font><font color="#990000">=</font> event<font color="#990000">.</font>BUTTON1 <font color="#990000">&amp;</font><font color="#990000">&amp;</font> event<font color="#990000">.</font><b><font color="#000000">getClickCount</font></b><font color="#990000">(</font><font color="#990000">)</font> <font color="#990000">&gt;</font><font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">)</font>
+				<font color="#FF0000">{</font>
+
+					
+				  Lcurrent1 <font color="#990000">=</font> <b><font color="#000000">findL</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getPoint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+
+					
+				  <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>Rcurrent<font color="#990000">!</font><font color="#990000">=</font> <b><font color="#0000FF">null</font></b><font color="#990000">)</font>
+				  <font color="#FF0000">{</font>
+						Rlist<font color="#990000">.</font><b><font color="#000000">remove</font></b><font color="#990000">(</font>Rcurrent<font color="#990000">)</font><font color="#990000">;</font>
+
+				  <font color="#FF0000">}</font>
+				  <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>Icurrent <font color="#990000">!</font><font color="#990000">=</font> <b><font color="#0000FF">null</font></b><font color="#990000">)</font>
+				  <font color="#FF0000">{</font>
+					  Ilist<font color="#990000">.</font><b><font color="#000000">remove</font></b><font color="#990000">(</font>Icurrent<font color="#990000">)</font><font color="#990000">;</font>
+				  <font color="#FF0000">}</font>
+
+				  <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>Vcurrent <font color="#990000">!</font><font color="#990000">=</font> <b><font color="#0000FF">null</font></b><font color="#990000">)</font>
+				  <font color="#FF0000">{</font>
+					  Vlist<font color="#990000">.</font><b><font color="#000000">remove</font></b><font color="#990000">(</font>Vcurrent<font color="#990000">)</font><font color="#990000">;</font>
+				  <font color="#FF0000">}</font>
+
+				  <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>Lcurrent1 <font color="#990000">!</font><font color="#990000">=</font> <b><font color="#0000FF">null</font></b><font color="#990000">)</font>
+				  <font color="#FF0000">{</font>
+					  Llist<font color="#990000">.</font><b><font color="#000000">remove</font></b><font color="#990000">(</font>Lcurrent1<font color="#990000">)</font><font color="#990000">;</font>
+				  <font color="#FF0000">}</font>
+
+				<font color="#FF0000">}</font>
+
+				paintPanel<font color="#990000">.</font><b><font color="#000000">repaint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+
+				
+			<font color="#FF0000">}</font>
+
+
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">mouseReleased</font></b><font color="#990000">(</font>MouseEvent event<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				paintPanel<font color="#990000">.</font><b><font color="#000000">setColor</font></b><font color="#990000">(</font>Color<font color="#990000">.</font>black<font color="#990000">)</font><font color="#990000">;</font>
+				paintPanel<font color="#990000">.</font><b><font color="#000000">repaint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font> 
+				<i><font color="#9A1900">//</font></i><i><font color="#9A1900"> new add;</font></i>
+				<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>addWi<font color="#990000">)</font>
+				<font color="#FF0000">{</font>
+				   <b><font color="#000000">initState</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+					paintPanel<font color="#990000">.</font><b><font color="#000000">setCursor</font></b><font color="#990000">(</font>Cursor<font color="#990000">.</font><b><font color="#000000">getDefaultCursor</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+
+				<font color="#FF0000">}</font>
+
+
+			<font color="#FF0000">}</font>
+		
+		
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>				
+
+		paintPanel<font color="#990000">.</font><b><font color="#000000">addMouseMotionListener</font></b><font color="#990000">(</font><b><font color="#0000FF">new</font></b> <b><font color="#000000">MouseMotionAdapter</font></b><font color="#990000">(</font><font color="#990000">)</font>
+		<font color="#FF0000">{</font>
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">mouseMoved</font></b><font color="#990000">(</font>MouseEvent event<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				<font color="#009900">int</font> x <font color="#990000">=</font> event<font color="#990000">.</font><b><font color="#000000">getX</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+			    <font color="#009900">int</font> y <font color="#990000">=</font> event<font color="#990000">.</font><b><font color="#000000">getY</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+
+				<b><font color="#0000FF">if</font></b><font color="#990000">(</font>addRe<font color="#990000">)</font>
+				<font color="#FF0000">{</font>	
+
+					Rlist<font color="#990000">.</font><b><font color="#000000">get</font></b><font color="#990000">(</font>Rlist<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font><font color="#990000">.</font><b><font color="#000000">SetLocation</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getPoint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+				<font color="#FF0000">}</font>
+				
+				<b><font color="#0000FF">if</font></b><font color="#990000">(</font>addCu<font color="#990000">)</font>
+				<font color="#FF0000">{</font>
+					Ilist<font color="#990000">.</font><b><font color="#000000">get</font></b><font color="#990000">(</font>Ilist<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font><font color="#990000">.</font><b><font color="#000000">SetLocation</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getPoint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+				
+				<font color="#FF0000">}</font>
+				
+				<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>addVo<font color="#990000">)</font>
+				<font color="#FF0000">{</font>
+					Vlist<font color="#990000">.</font><b><font color="#000000">get</font></b><font color="#990000">(</font>Vlist<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font><font color="#990000">.</font><b><font color="#000000">SetLocation</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getPoint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+				<font color="#FF0000">}</font>
+				
+
+
+				<b><font color="#0000FF">if</font></b> <font color="#990000">(</font>addRe <font color="#990000">|</font><font color="#990000">|</font> addCu <font color="#990000">|</font><font color="#990000">|</font> addVo <font color="#990000">|</font><font color="#990000">|</font> addWi<font color="#990000">)</font>
+				<font color="#FF0000">{</font>
+					paintPanel<font color="#990000">.</font><b><font color="#000000">setColor</font></b><font color="#990000">(</font>Color<font color="#990000">.</font>blue<font color="#990000">)</font><font color="#990000">;</font>
+					paintPanel<font color="#990000">.</font><b><font color="#000000">setPaintList</font></b><font color="#990000">(</font>Rlist<font color="#990000">,</font>Vlist<font color="#990000">,</font>Ilist<font color="#990000">,</font>Llist<font color="#990000">)</font><font color="#990000">;</font>
+					paintPanel<font color="#990000">.</font><b><font color="#000000">repaint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font> 
+				<font color="#FF0000">}</font>
+				
+			<font color="#FF0000">}</font>
+
+
+
+			<b><font color="#0000FF">public</font></b> <font color="#009900">void</font> <b><font color="#000000">mouseDragged</font></b><font color="#990000">(</font>MouseEvent event<font color="#990000">)</font>
+			<font color="#FF0000">{</font>
+				System<font color="#990000">.</font>out<font color="#990000">.</font><b><font color="#000000">println</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getPoint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+
+				  <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>Rcurrent <font color="#990000">!</font><font color="#990000">=</font> <b><font color="#0000FF">null</font></b><font color="#990000">)</font>
+				  <font color="#FF0000">{</font>		
+						Rlist<font color="#990000">.</font><b><font color="#000000">get</font></b><font color="#990000">(</font>Rlist<font color="#990000">.</font><b><font color="#000000">indexOf</font></b><font color="#990000">(</font>Rcurrent<font color="#990000">)</font><font color="#990000">)</font><font color="#990000">.</font><b><font color="#000000">SetLocation</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getX</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">,</font>event<font color="#990000">.</font><b><font color="#000000">getY</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+
+				  <font color="#FF0000">}</font>
+				  <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>Icurrent <font color="#990000">!</font><font color="#990000">=</font> <b><font color="#0000FF">null</font></b><font color="#990000">)</font>
+				  <font color="#FF0000">{</font>
+						Ilist<font color="#990000">.</font><b><font color="#000000">get</font></b><font color="#990000">(</font>Ilist<font color="#990000">.</font><b><font color="#000000">indexOf</font></b><font color="#990000">(</font>Icurrent<font color="#990000">)</font><font color="#990000">)</font><font color="#990000">.</font><b><font color="#000000">SetLocation</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getX</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">,</font>event<font color="#990000">.</font><b><font color="#000000">getY</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+				  <font color="#FF0000">}</font>
+
+				  <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>Vcurrent <font color="#990000">!</font><font color="#990000">=</font> <b><font color="#0000FF">null</font></b><font color="#990000">)</font>
+				  <font color="#FF0000">{</font>
+						Vlist<font color="#990000">.</font><b><font color="#000000">get</font></b><font color="#990000">(</font>Vlist<font color="#990000">.</font><b><font color="#000000">indexOf</font></b><font color="#990000">(</font>Vcurrent<font color="#990000">)</font><font color="#990000">)</font><font color="#990000">.</font><b><font color="#000000">SetLocation</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getX</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">,</font>event<font color="#990000">.</font><b><font color="#000000">getY</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+				  <font color="#FF0000">}</font>
+
+				 <b><font color="#0000FF">if</font></b> <font color="#990000">(</font>addWi<font color="#990000">)</font>
+				<font color="#FF0000">{</font>
+					Llist<font color="#990000">.</font><b><font color="#000000">get</font></b><font color="#990000">(</font>Llist<font color="#990000">.</font><b><font color="#000000">indexOf</font></b><font color="#990000">(</font>Lcurrent<font color="#990000">)</font><font color="#990000">)</font><font color="#990000">.</font><b><font color="#000000">setLinee</font></b><font color="#990000">(</font>event<font color="#990000">.</font><b><font color="#000000">getPoint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">)</font><font color="#990000">;</font>
+					paintPanel<font color="#990000">.</font><b><font color="#000000">setPaintList</font></b><font color="#990000">(</font>Rlist<font color="#990000">,</font>Vlist<font color="#990000">,</font>Ilist<font color="#990000">,</font>Llist<font color="#990000">)</font><font color="#990000">;</font>
+				<font color="#FF0000">}</font>
+				
+
+				  paintPanel<font color="#990000">.</font><b><font color="#000000">setColor</font></b><font color="#990000">(</font>Color<font color="#990000">.</font>blue<font color="#990000">)</font><font color="#990000">;</font>
+				  paintPanel<font color="#990000">.</font><b><font color="#000000">repaint</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font> 
+
+			<font color="#FF0000">}</font>
+				
+		
+		<font color="#FF0000">}</font><font color="#990000">)</font><font color="#990000">;</font>				
+
+
+
+
+	<font color="#FF0000">}</font>
+
+
+
+	<b><font color="#0000FF">public</font></b> <b><font color="#0000FF">static</font></b> <font color="#009900">void</font> <b><font color="#000000">main</font></b><font color="#990000">(</font>String<font color="#990000">[</font><font color="#990000">]</font> args<font color="#990000">)</font> 
+	<font color="#FF0000">{</font>
+		mainFrame mf <font color="#990000">=</font> <b><font color="#0000FF">new</font></b> <b><font color="#000000">mainFrame</font></b><font color="#990000">(</font><font color="#990000">)</font><font color="#990000">;</font>
+	<font color="#FF0000">}</font>
+<font color="#FF0000">}</font> </tt></pre>
+<p><hr>
+
+<h3>Results</h3>
+
+
+
+<pre>
+
+
+</pre>
+<p><img src = "Q1-1.JPG">
+<p><img src = "Q1-3.JPG">
+<p><img src = "Q1-2.JPG">
+<p><img src = "Q1-4.JPG">
+
+<p><hr>
+
+<p>Maintained by </p>
+updated <i>Fri Jul 31 11:42:24 2015</i>
+
+</body></html>
